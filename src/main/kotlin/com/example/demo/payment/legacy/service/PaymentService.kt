@@ -1,10 +1,11 @@
 package com.example.demo.payment.legacy.service
 
 import com.example.demo.payment.legacy.dto.Amount
+import org.springframework.stereotype.Service
 
-class Payment {
+@Service
+class PaymentService(val bankGateway: YourBankGatewayService) {
     fun pay(amount: Amount){
-        val bankGateway = YourBankGateway()
         bankGateway.pay(amount.value)
     }
 }
