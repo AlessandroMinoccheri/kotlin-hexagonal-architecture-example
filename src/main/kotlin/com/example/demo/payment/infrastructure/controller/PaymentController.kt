@@ -19,7 +19,7 @@ class PaymentController(val service: CustomerService, val payment: Payment) {
     }
 
     @GetMapping("/customers")
-    fun getResources(): List<Customer> = service.findCustomers()
+    fun getResources(): List<Customer> = service.findAllCustomers()
 
     @PostMapping("/customers")
     fun createResource(@RequestBody customerRequest: CustomerRequest): String {
