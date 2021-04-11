@@ -10,6 +10,7 @@ class Customer(
     }
 
     fun calculateRating(): Int{
+        //business logic
         return 0
     }
 

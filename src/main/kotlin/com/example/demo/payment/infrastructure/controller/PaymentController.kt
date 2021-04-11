@@ -23,7 +23,7 @@ class PaymentController(val service: CustomerService, val payment: Payment) {
 
     @PostMapping("/customers")
     fun createResource(@RequestBody customerRequest: CustomerRequest): String {
-        val customer = Customer.create(customerRequest.id, customerRequest.firstname, customerRequest.lastname)
+        val customer: Customer = Customer.create(customerRequest.id, customerRequest.firstname, customerRequest.lastname)
         service.save(customer)
 
         return "Done."
