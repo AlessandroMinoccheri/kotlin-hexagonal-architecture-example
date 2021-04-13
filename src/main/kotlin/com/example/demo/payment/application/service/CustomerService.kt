@@ -10,7 +10,9 @@ class CustomerService(private val db: CustomerRepository) {
         return db.findAllCustomers()
     }
 
-    fun save (customer: Customer) {
+    fun save (id: String, firstname: String, lastname: String) {
+        val customer: Customer = Customer.create(id, firstname, lastname)
+
         db.save(customer)
     }
 }

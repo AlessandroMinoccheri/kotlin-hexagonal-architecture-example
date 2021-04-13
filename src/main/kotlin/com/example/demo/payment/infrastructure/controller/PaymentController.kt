@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/v1")
-class PaymentController(val service: CustomerService, val payment: Payment) {
+class PaymentController(val customerService: CustomerService, val payment: Payment) {
     @GetMapping("/")
     fun test(): List<Message> {
         return listOf(
@@ -19,12 +19,11 @@ class PaymentController(val service: CustomerService, val payment: Payment) {
     }
 
     @GetMapping("/customers")
-    fun getResources(): List<Customer> = service.findAllCustomers()
+    fun getResources(): List<Customer> = customerService.findAllCustomers()
 
     @PostMapping("/customers")
-    fun createResource(@RequestBody customerRequest: CustomerRequest): String {
-        val customer: Customer = Customer.create(customerRequest.id, customerRequest.firstname, customerRequest.lastname)
-        service.save(customer)
+    fun createCustomer(@RequestBody customerRequest: CustomerRequest): String {
+        customerService.save(customerRequest.id, customerRequest.firstname, customerRequest.lastname)
 
         return "Done."
     }
