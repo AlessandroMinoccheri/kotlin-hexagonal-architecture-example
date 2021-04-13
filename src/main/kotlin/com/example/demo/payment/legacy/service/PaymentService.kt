@@ -1,11 +1,16 @@
 package com.example.demo.payment.legacy.service
 
 import com.example.demo.payment.legacy.dto.Amount
+import com.example.demo.payment.legacy.model.User
 import org.springframework.stereotype.Service
 
 @Service
-class PaymentService(val bankGateway: YourBankGatewayService) {
+class PaymentService {
     fun pay(amount: Amount){
-        bankGateway.pay(amount.value)
+        println("Payment done.")
+    }
+
+    fun getByUser(user: User){
+        println("List of payments.")
     }
 }
