@@ -1,10 +1,8 @@
 package com.example.demo.payment.infrastructure.repository
 
 import com.example.demo.payment.domain.model.Customer
-import com.example.demo.payment.domain.repository.CustomerRepository
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.springframework.stereotype.Repository
 import java.util.UUID
 
 object Customers : Table() {
@@ -16,8 +14,7 @@ object Customers : Table() {
 
 const val DB_NAME = "jdbc:h2:file:~/h2/testdb3"
 
-@Repository
-class CustomerRepositoryH2 : CustomerRepository {
+class CustomerRepository {
 
     init {
         Database.connect(DB_NAME, driver = "org.h2.Driver", user = "sa", password = "password")
@@ -26,7 +23,7 @@ class CustomerRepositoryH2 : CustomerRepository {
         }
     }
 
-    override fun findAllCustomers(): List<Customer> {
+    fun findAllCustomers(): List<Customer> {
         return transaction {
             Customers
                 .selectAll()
@@ -45,7 +42,7 @@ class CustomerRepositoryH2 : CustomerRepository {
         return uuid.toString()
     }
 
-    override fun save(customer: Customer): Customer {
+    fun save(customer: Customer): Customer {
 
         val customerWithId = customer.withId(uuid())
 
