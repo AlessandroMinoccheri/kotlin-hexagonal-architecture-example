@@ -1,6 +1,6 @@
 package com.example.demo.payment.domain.model
 
-data class Customer private constructor(
+data class Customer internal constructor(
     val id: String = "",
     val firstName: String,
     val lastName: String
