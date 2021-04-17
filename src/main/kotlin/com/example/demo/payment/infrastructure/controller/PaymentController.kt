@@ -22,10 +22,9 @@ class PaymentController(val customerService: CustomerService, val payment: Payme
     fun getResources(): List<Customer> = customerService.findAllCustomers()
 
     @PostMapping("/customers")
-    fun createCustomer(@RequestBody customerRequest: CustomerRequest): String {
-        customerService.save(customerRequest.id, customerRequest.firstname, customerRequest.lastname)
-
-        return "Done."
+    fun createCustomer(@RequestBody customerRequest: CustomerRequest): CustomerResponse {
+        val customer = customerService.save(customerRequest.firstname, customerRequest.lastname)
+        return CustomerResponse(id = customer.id, firstname = customer.firstName, lastname = customer.lastName);
     }
 
     @PostMapping("/pay")
@@ -38,4 +37,5 @@ class PaymentController(val customerService: CustomerService, val payment: Payme
 
 data class Message(val id: String, val text: String)
 
-class CustomerRequest (val id: String, val firstname: String, val lastname: String)
+class CustomerRequest (val firstname: String, val lastname: String)
+class CustomerResponse (val id: String, val firstname: String, val lastname: String)

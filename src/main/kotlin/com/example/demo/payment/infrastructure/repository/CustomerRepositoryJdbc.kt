@@ -8,18 +8,30 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
 import org.springframework.stereotype.Repository
 import java.sql.ResultSet
+import java.util.UUID
+
+
+
 
 @Repository
 class CustomerRepositoryJdbc constructor(private val customerRepository: NamedParameterJdbcTemplate): CustomerRepository {
     override fun findAllCustomers(): List<Customer> {
         val rowMapper: RowMapper<Customer> = RowMapper<Customer> { resultSet: ResultSet, rowIndex: Int ->
-            Customer(resultSet.getString("id"), resultSet.getString("firstname"), resultSet.getString("lastname"))
+            Customer.create(resultSet.getString("id"), resultSet.getString("firstname"), resultSet.getString("lastname"))
         }
 
         return customerRepository.query("SELECT * FROM customers", rowMapper)
     }
 
-    override fun save(customer: Customer) {
+    private fun uuid() :String {
+        val uuid = UUID.randomUUID()
+        return uuid.toString()
+    }
+
+    override fun save(customer: Customer): Customer {
+
+        val customerWithId = customer.withId(uuid())
+
         val sql = """
             INSERT INTO customers (id, firstname, lastname)
             VALUES (:id, :firstName, :lastName)
@@ -28,10 +40,13 @@ class CustomerRepositoryJdbc constructor(private val customerRepository: NamedPa
         val keyHolder = GeneratedKeyHolder()
         customerRepository.update(sql,
             MapSqlParameterSource(mapOf(
-                "id" to customer.id,
-                "firstName" to customer.firstName,
-                "lastName" to customer.lastName,
+                "id" to customerWithId.id,
+                "firstName" to customerWithId.firstName,
+                "lastName" to customerWithId.lastName,
             )),
             keyHolder)
+
+        return customerWithId
+
     }
 }
