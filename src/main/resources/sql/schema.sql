@@ -1,6 +1,0 @@
-CREATE TABLE IF NOT EXISTS customers
-(
-    id VARCHAR (60) PRIMARY KEY,
-    firstname VARCHAR NOT NULL,
-    lastname VARCHAR NOT NULL
-);
