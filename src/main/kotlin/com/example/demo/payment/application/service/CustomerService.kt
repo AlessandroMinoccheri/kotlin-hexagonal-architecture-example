@@ -1,7 +1,7 @@
 package com.example.demo.payment.application.service
 
 import com.example.demo.payment.domain.model.Customer
-import com.example.demo.payment.infrastructure.repository.CustomerRepository
+import com.example.demo.payment.domain.repository.CustomerRepository
 
 class CustomerService(private val db: CustomerRepository) {
     fun findAllCustomers(): List<Customer> {
