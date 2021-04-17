@@ -25,6 +25,5 @@ fun allBeans(): BeanDefinitionDsl {
         this.bean<CustomerService>()
         this.bean<CustomerHandler>()
         this.bean(CustomerRoutes::routes)
-
     }
 }
