@@ -4,5 +4,5 @@ import com.example.demo.payment.domain.model.Customer
 
 interface CustomerRepository {
     fun findAllCustomers(): List<Customer>
-    fun save(customer: Customer)
+    fun save(customer: Customer): Customer
 }
