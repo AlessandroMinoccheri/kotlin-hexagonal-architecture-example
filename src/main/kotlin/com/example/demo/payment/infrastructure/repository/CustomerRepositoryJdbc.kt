@@ -11,19 +11,23 @@ import java.sql.ResultSet
 import java.util.UUID
 
 
-
-
 @Repository
-class CustomerRepositoryJdbc constructor(private val customerRepository: NamedParameterJdbcTemplate): CustomerRepository {
+class CustomerRepositoryJdbc constructor(private val customerRepository: NamedParameterJdbcTemplate) :
+    CustomerRepository {
     override fun findAllCustomers(): List<Customer> {
-        val rowMapper: RowMapper<Customer> = RowMapper<Customer> { resultSet: ResultSet, rowIndex: Int ->
-            Customer.create(resultSet.getString("id"), resultSet.getString("firstname"), resultSet.getString("lastname"))
+        val rowMapper: RowMapper<Customer> = RowMapper<Customer> { resultSet: ResultSet,
+                                                                   rowIndex: Int ->
+            Customer.create(
+                resultSet.getString("id"),
+                resultSet.getString("firstname"),
+                resultSet.getString("lastname")
+            )
         }
 
         return customerRepository.query("SELECT * FROM customers", rowMapper)
     }
 
-    private fun uuid() :String {
+    private fun uuid(): String {
         val uuid = UUID.randomUUID()
         return uuid.toString()
     }
@@ -38,13 +42,17 @@ class CustomerRepositoryJdbc constructor(private val customerRepository: NamedPa
         """.trimIndent()
 
         val keyHolder = GeneratedKeyHolder()
-        customerRepository.update(sql,
-            MapSqlParameterSource(mapOf(
-                "id" to customerWithId.id,
-                "firstName" to customerWithId.firstName,
-                "lastName" to customerWithId.lastName,
-            )),
-            keyHolder)
+        customerRepository.update(
+            sql,
+            MapSqlParameterSource(
+                mapOf(
+                    "id" to customerWithId.id,
+                    "firstName" to customerWithId.firstName,
+                    "lastName" to customerWithId.lastName,
+                )
+            ),
+            keyHolder
+        )
 
         return customerWithId
 

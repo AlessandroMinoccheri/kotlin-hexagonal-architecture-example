@@ -5,8 +5,8 @@ import com.example.demo.payment.domain.service.GatewayProvider
 import org.springframework.stereotype.Component
 
 @Component
-class YourBankGateway constructor(): GatewayProvider {
+class YourBankGateway: GatewayProvider {
     override fun pay(amount: Money) {
         println("You have paid $amount")
-    }
+    }   
 }
