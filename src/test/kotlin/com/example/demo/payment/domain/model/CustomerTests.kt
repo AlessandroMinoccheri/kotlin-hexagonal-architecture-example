@@ -9,7 +9,7 @@ class CustomerTests {
 
     @Test
     fun itShouldCreateCustomer() {
-        val customer = Customer("1", "foo", "bar")
+        val customer = Customer.createTransient("foo", "bar")
 
         assertEquals("Customer[id=1, firstName=foo, lastName=bar]", customer.toString())
     }
